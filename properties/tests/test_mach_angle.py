@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 
 """Test Mach angle functions.
-
-Test data is obtained from http://www.grc.nasa.gov/WWW/k-12/airplane/machang.html.
 """
 
+from __future__ import absolute_import, division
 
 import nose
 import nose.tools as nt
@@ -20,10 +19,10 @@ def test_mach_lesser_than_one():
 
 def test_normal_mach():
     m1 = 1.5
-    nt.assert_almost_equal(mu_in_deg(m1), 41.762, places=3)
+    nt.assert_almost_equal(mu_in_deg(m1),  41.8103148, places=3)
 
     m2 = 2.6
-    nt.assert_almost_equal(mu_in_deg(m2), 22.594, places=3)
+    nt.assert_almost_equal(mu_in_deg(m2),  22.6198649, places=3)
 
 
 if __name__ == '__main__':
