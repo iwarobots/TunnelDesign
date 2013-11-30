@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 
-from math import atan, pi, sqrt
+from __future__ import absolute_import, division
+
+from math import asin, atan, degrees, sqrt
 
 from properties.constants import GAMMA
 
@@ -16,4 +18,12 @@ def nu_in_rad(m):
 
 
 def nu_in_deg(m):
-    return nu_in_rad(m) * 180 / pi
+    return degrees(nu_in_rad(m))
+
+
+def mu_in_rad(m):
+    return asin(1/m)
+
+
+def mu_in_deg(m):
+    return degrees(mu_in_rad(m))
