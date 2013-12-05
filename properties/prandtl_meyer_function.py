@@ -38,9 +38,9 @@ def nu_in_deg2m(nu):
     return nu_in_rad2m(nu)
 
 
-def mu_in_rad(m):
+def m2mu_in_rad(m):
     return asin(1/m)
 
 
-def mu_in_deg(m):
-    return degrees(mu_in_rad(m))
+def m2mu_in_deg(m):
+    return degrees(m2mu_in_rad(m))
