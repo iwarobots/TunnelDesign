@@ -19,10 +19,19 @@ import properties.prandtl_meyer_function as pmf
 
 
 def angle_between_two_lines(k1, k2):
+    """Returns the angle between two lines.
+    
+    The result is in radian. The return value belongs to [0, pi/2].
+    """
     return atan(abs((k2-k1)/(1+k1*k2)))
 
 
 def intersection_of_two_rays(x1, y1, k1, x2, y2, k2):
+    """Returns the point of intersection of two rays.
+    
+    (x1, y1) and (x2, y2) are the locations of end points of two rays respectively.
+    k1 and k2 are the slopes of two rays.
+    """
     a = np.array([[k1, -1],
                   [k2, -1]])
     b = np.array([k1*x1-y1, k2*x2-y2])
