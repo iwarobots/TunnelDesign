@@ -38,7 +38,7 @@ def intersection_of_two_rays(x1, y1, k1, x2, y2, k2):
     return solve(a, b)
 
 
-class Solver(object):
+class MinimumLengthDivergentDuctSolver(object):
 
     def __init__(self,
                  final_mach,
