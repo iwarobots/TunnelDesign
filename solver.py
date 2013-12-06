@@ -247,7 +247,7 @@ class Solver(object):
         return np.vstack((np.array([[0, 1]]),
                           self._points[:,self._n]))
 
-    def save_plot(self):
+    def save_plot(self, filename, dpi=None):
         if self._points is None:
             self.solve()
 
@@ -280,9 +280,4 @@ class Solver(object):
             y = y[np.logical_not(np.isnan(y))]
             ax.plot(x, y, 'b')
 
-
-        fig.savefig('1.png', dpi=900)
-
-
-s = Solver(2.13, 4)
-s.save_plot()
+        fig.savefig(filename, dpi=dpi)
