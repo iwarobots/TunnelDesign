@@ -2,6 +2,8 @@
 
 # TODO: Needs tests
 # TODO: Needs performance improvements
+# TODO: It is probable that the performance can be improved if we do not
+# pre-compute all theta, mu and m matrix.
 
 
 from __future__ import absolute_import, division
