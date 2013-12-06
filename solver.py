@@ -20,7 +20,7 @@ import properties.prandtl_meyer_function as pmf
 
 def angle_between_two_lines(k1, k2):
     """Returns the angle between two lines.
-    
+
     The result is in radian. The return value belongs to [0, pi/2].
     """
     return atan(abs((k2-k1)/(1+k1*k2)))
@@ -28,7 +28,7 @@ def angle_between_two_lines(k1, k2):
 
 def intersection_of_two_rays(x1, y1, k1, x2, y2, k2):
     """Returns the point of intersection of two rays.
-    
+
     (x1, y1) and (x2, y2) are the locations of end points of two rays respectively.
     k1 and k2 are the slopes of two rays.
     """
@@ -48,7 +48,7 @@ class MinimumLengthDivergentDuctSolver(object):
         # Checks Mach number
         if final_mach <= 1:
             raise ValueError('Mach number at exit should be greater than 1')
-        
+
         # Checks expansion steps
         if n <= 1:
             raise ValueError('Expansion steps should be greater than 1')
@@ -66,6 +66,8 @@ class MinimumLengthDivergentDuctSolver(object):
         self._nu = None
         self._m = None
         self._mu = None
+
+        self._plot = None
 
     @property
     def final_mach(self):
@@ -175,7 +177,7 @@ class MinimumLengthDivergentDuctSolver(object):
             for j in xrange(i, self.size):
                 self._mu[i, j] = pmf.m2mu_in_rad(self._m[i, j])
         return self._mu
-    
+
     def _compute_axis_point(self, n):
         if not 0 <= n <= self._n - 1:
             raise ValueError
@@ -259,13 +261,13 @@ class MinimumLengthDivergentDuctSolver(object):
         return np.vstack((np.array([[0, 1]]),
                           self._points[:,self._n]))
 
-    def save_plot(self, filename, dpi=None):
+    def refresh_plot(self):
         if self._points is None:
             self.solve()
 
         fig = plt.figure()
         ax = fig.add_subplot(111, aspect='equal')
-        
+
         # Plots outer lines
         ax.plot([0, 0, self._points[-1, -2, 0]], [1, 0, 0], 'b')
         wall_points = self.get_wall_points()
@@ -294,5 +296,13 @@ class MinimumLengthDivergentDuctSolver(object):
             y = y[np.logical_not(np.isnan(y))]
             ax.plot(x, y, 'b')
 
-        # Saves the plot.
-        fig.savefig(filename, dpi=dpi)
+        self._plot = fig
+        return self._plot
+
+    def save_plot(self, filename, dpi=None):
+        self.refresh_plot()
+        self._plot.savefig(filename, dpi=dpi)
+
+
+s = MinimumLengthDivergentDuctSolver(3,50)
+s.save_plot('1.png', 200)
