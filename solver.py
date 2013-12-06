@@ -81,12 +81,14 @@ class Solver(object):
 
     @property
     def region_mat(self):
+        """Depreciated."""
         if self._region_mat is None:
             self._region_mat = self.compute_region_mat()
         return self._region_mat
 
     @property
     def wall_regions(self):
+        """Depreciated."""
         if self._wall_regions is None:
             self._wall_regions = self.compute_wall_regions()
         return self._wall_regions
@@ -100,6 +102,7 @@ class Solver(object):
         return self.theta_max / self.n
 
     def compute_region_mat(self):
+        """Depreciated."""
         self._region_mat = np.zeros((self.size, self.size), dtype=int)
         self._region_mat[:] = np.nan
 
@@ -111,6 +114,7 @@ class Solver(object):
         return self._region_mat
 
     def compute_wall_regions(self):
+        """Depreciated."""
         return self.region_mat[:, self.n]
 
     def compute_theta_minus_nu(self):
@@ -171,7 +175,7 @@ class Solver(object):
             for j in xrange(i, self.size):
                 self._mu[i, j] = pmf.m2mu_in_rad(self._m[i, j])
         return self._mu
-
+    
     def _compute_axis_point(self, n):
         if not 0 <= n <= self._n - 1:
             raise ValueError
@@ -181,7 +185,6 @@ class Solver(object):
         if self._mu is None:
             self.compute_mu()
 
-        # Defines starting point
         if n == 0:
             x1, y1 = 0, 1
         else:
@@ -261,15 +264,16 @@ class Solver(object):
             self.solve()
 
         fig = plt.figure()
-
         ax = fig.add_subplot(111, aspect='equal')
+        
+        # Plots outer lines
         ax.plot([0, 0, self._points[-1, -2, 0]], [1, 0, 0], 'b')
-
         wall_points = self.get_wall_points()
         x = wall_points[:, 0]
         y = wall_points[:, 1]
         ax.plot(x, y, 'b')
 
+        # Plots longitudinal mesh
         for i in xrange(self._n):
             row = self._points[i]
             xs = row[:, 0]
@@ -278,6 +282,7 @@ class Solver(object):
             ys = ys[np.logical_not(np.isnan(ys))]
             ax.plot(xs, ys, 'b')
 
+        # Plots lateral mesh
         xs = self._points[:, :, 0].T
         ys = self._points[:, :, 1].T
         for i in xrange(len(xs)):
@@ -289,4 +294,5 @@ class Solver(object):
             y = y[np.logical_not(np.isnan(y))]
             ax.plot(x, y, 'b')
 
+        # Saves the plot.
         fig.savefig(filename, dpi=dpi)
