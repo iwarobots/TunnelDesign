@@ -6,7 +6,7 @@
 
 from __future__ import absolute_import, division
 
-from math import atan, degrees, tan
+from math import atan, tan
 
 import numpy as np
 
