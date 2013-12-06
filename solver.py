@@ -35,8 +35,14 @@ class Solver(object):
                  final_mach,
                  n):
 
-        # Checks invalid params
-        #
+        # Checks invalid input params
+        # Checks Mach number
+        if final_mach <= 1:
+            raise ValueError('Mach number at exit should be greater than 1')
+        
+        # Checks expansion steps
+        if n <= 1:
+            raise ValueError('Expansion steps should be greater than 1')
 
         self._final_mach = final_mach
         self._n = n
