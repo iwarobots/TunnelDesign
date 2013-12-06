@@ -302,7 +302,3 @@ class MinimumLengthDivergentDuctSolver(object):
     def save_plot(self, filename, dpi=None):
         self.refresh_plot()
         self._plot.savefig(filename, dpi=dpi)
-
-
-s = MinimumLengthDivergentDuctSolver(3,50)
-s.save_plot('1.png', 200)
