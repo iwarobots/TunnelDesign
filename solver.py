@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# TODO: Needs tests
+# TODO: Needs performance improvements
+
 
 from __future__ import absolute_import, division
 
@@ -9,6 +12,8 @@ import numpy as np
 
 from scipy.optimize import brentq
 from scipy.linalg import solve
+
+import matplotlib.pyplot as plt
 
 import properties.prandtl_meyer_function as pmf
 
@@ -235,3 +240,43 @@ class Solver(object):
 
         return np.vstack((np.array([[0, 1]]),
                           self._points[:,self._n]))
+
+    def save_plot(self):
+        if self._points is None:
+            self.solve()
+
+        fig = plt.figure()
+
+        ax = fig.add_subplot(111, aspect='equal')
+        ax.plot([0, 0, self._points[-1, -2, 0]], [1, 0, 0], 'b')
+
+        wall_points = self.get_wall_points()
+        x = wall_points[:, 0]
+        y = wall_points[:, 1]
+        ax.plot(x, y, 'b')
+
+        for i in xrange(self._n):
+            row = self._points[i]
+            xs = row[:, 0]
+            xs = xs[np.logical_not(np.isnan(xs))]
+            ys = row[:, 1]
+            ys = ys[np.logical_not(np.isnan(ys))]
+            ax.plot(xs, ys, 'b')
+
+        xs = self._points[:, :, 0].T
+        ys = self._points[:, :, 1].T
+        for i in xrange(len(xs)):
+            x = xs[i]
+            x = np.insert(x, 0, 0)
+            x = x[np.logical_not(np.isnan(x))]
+            y = ys[i]
+            y = np.insert(y, 0, 1)
+            y = y[np.logical_not(np.isnan(y))]
+            ax.plot(x, y, 'b')
+
+
+        fig.savefig('1.png', dpi=900)
+
+
+s = Solver(2.13, 4)
+s.save_plot()
