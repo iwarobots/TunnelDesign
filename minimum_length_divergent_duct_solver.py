@@ -99,7 +99,7 @@ class MinimumLengthDivergentDuctSolver(object):
 
     @property
     def theta_max(self):
-        return pmf.m2nu_in_rad(self.final_mach) / 2
+        return pmf.m2nu(self.final_mach) / 2
 
     @property
     def theta_per_step(self):
@@ -165,7 +165,7 @@ class MinimumLengthDivergentDuctSolver(object):
 
         for i in xrange(self.size):
             for j in xrange(i, self.size):
-                self._m[i, j] = pmf.nu_in_rad2m(self._nu[i, j])
+                self._m[i, j] = pmf.nu2m(self._nu[i, j])
         return self._m
 
     def compute_mu(self):
@@ -177,7 +177,7 @@ class MinimumLengthDivergentDuctSolver(object):
 
         for i in xrange(self.size):
             for j in xrange(i, self.size):
-                self._mu[i, j] = pmf.m2mu_in_rad(self._m[i, j])
+                self._mu[i, j] = pmf.m2mu(self._m[i, j])
         return self._mu
 
     def _compute_axis_point(self, n):
